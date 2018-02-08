@@ -56,9 +56,14 @@ router.get('/test',(ctx)=>
 //使用bluebird时候的primose处理回调
 router.get('/bb',(ctx)=>
 {
-      pool.queryAsync('SELECT * from s_user').then(function (data)
+      pool.queryAsync('SELECT * from s_user')
+      .then(function (data)
       {
-        console.log(data);
+        console.log('ok');
+      })
+      .catch(function(err)
+      {
+        console.log(err);
       });
 });
 
