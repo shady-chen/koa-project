@@ -1,0 +1,20 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "website_koa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-onerror": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "koa-static": "^4.0.2",
+    "mysql": "^2.15.0"
+  }
+}
