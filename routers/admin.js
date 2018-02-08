@@ -2,6 +2,9 @@
 const router = require('koa-router')();
 const fs = require('fs');
 const pool = require('../libs/mysql');
+const Promise = require('bluebird');
+Promise.promisifyAll(require("mysql/lib/Connection").prototype);
+Promise.promisifyAll(require("mysql/lib/Pool").prototype);
 
 router.get("/",(ctx)=>
 {
@@ -31,26 +34,38 @@ router.get("/login",(ctx)=>
       ctx.body = html;
     }
 });
-
+//没有使用bluebird时候的primose处理回调
 router.get('/test',(ctx)=>
 {
-  return new Promise((resolve,reject)=>
-  {
-
-    pool.query('SELECT * from s_user', function (error, results, fields)
+    return new Promise((resolve,reject)=>
     {
-      if (error) throw error;
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~');
-      resolve(results[0]);
-      console.log(fields);
+      pool.query('SELECT * from s_user', function (error, results, fields)
+      {
+        if (error) throw error;
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        resolve(results[0]);
+      });
+    }).then(function(val){
+      console.log(val);
+       ctx.type = 'json';
+       ctx.body = val;
     });
-  }).then(function(val){
-    console.log(val);
-     ctx.type = 'json';
-     ctx.body = val;
-  });
-
 });
+
+
+//使用bluebird时候的primose处理回调
+router.get('/bb',(ctx)=>
+{
+      pool.queryAsync('SELECT * from s_user').then(function (data)
+      {
+        console.log(data);
+      });
+});
+
+
+
+
+
 
 //登录验证
 router.post('/login',(ctx)=>
