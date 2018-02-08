@@ -6,7 +6,10 @@ const session = require('koa-session');
 const bodyParser = require('koa-bodyparser');
 const onError = require('koa-onerror');
 const router = require('koa-router')();
+const cors = require('koa-cors');
 onError(app);//监听~~错误
+
+app.use(cors());
 
 //使用session
 app.keys = ['shady\'s session'];

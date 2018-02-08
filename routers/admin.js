@@ -43,12 +43,12 @@ router.get('/test',(ctx)=>
       {
         if (error) throw error;
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~');
-        resolve(results[0]);
+        resolve(results);
       });
     }).then(function(val){
-      console.log(val);
        ctx.type = 'json';
        ctx.body = val;
+       return val;
     });
 });
 
